@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mirelly, casa comigo?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at center, #1a1a1a, #000);
+      transition: background 1s ease;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-bottom: 80px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.2em;
+      color: #ff69b4;
+    }
+
+    .amor-container {
+      font-size: 36px;
+      font-weight: bold;
+      color: #ff69b4;
+      min-height: 60px;
+      margin-bottom: 20px;
+      animation: brilho 2s infinite;
+    }
+
+    .heart {
+      color: red;
+      margin-left: 8px;
+      font-size: 1.2em;
+    }
+
+    img {
+      max-width: 300px;
+      width: 100%;
+      border-radius: 12px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    p {
+      font-size: 1.1em;
+      color: #ffe4e1;
+      margin: 20px auto;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+    }
+
+    li {
+      margin: 8px 0;
+      font-weight: bold;
+      color: #ffc0cb;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 10px 20px;
+      background-color: #ff69b4;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #ff1493;
+    }
+
+    .rodape-fixo {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1a1a1a;
+      color: #ff69b4;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 1.2em;
+      z-index: 999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .play-button {
+      background-color: #ff69b4;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .play-button:hover {
+      background-color: #ff1493;
+    }
+
+    @keyframes brilho {
+      0%, 100% {
+        text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+      }
+      50% {
+        text-shadow: 0 0 5px #ff1493, 0 0 15px #ff1493;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Mirelly, casa comigo?</h1>
+
+  <img src="WhatsApp Image 2025-03-31 at 10.26.15.jpeg" alt="Imagem do amor da minha vida" />
+
+  <p>
+    Meu amor, você é a melhor parte dos meus dias, a luz que ilumina meu caminho.  
+    Te amar é a coisa mais fácil que já fiz, e espero poder te amar para sempre, Toninha. 💖
+  </p>
+
+  <ul>
+    <li>Mirelly, deusa grega</li>
+    <li>Te amo, lindona</li>
+    <li>Afrodite, deusa do Olimpo</li>
+  </ul>
+
+  <a href="https://meusitetoninha.com" target="_blank">Nosso cantinho 💘</a>
+
+  <!-- Rodapé com "Eu te amo" + botão de música -->
+  <div class="rodape-fixo">
+    <span id="amor" class="amor-container"></span>
+    <button class="play-button" onclick="toggleAudio()">⏸️ Pausar música</button>
+  </div>
+
+  <!-- Áudio com autoplay -->
+  <audio id="musica" src="diga-sim.mp3" autoplay loop></audio>
+
+  <script>
+    const texto = "Eu te amo ";
+    const container = document.getElementById("amor");
+    const audio = document.getElementById("musica");
+    const playButton = document.querySelector(".play-button");
+
+    let index = 0;
+    let deletando = false;
+
+    function digitar() {
+      if (!deletando) {
+        container.textContent = texto.slice(0, index);
+        index++;
+        if (index > texto.length) {
+          deletando = true;
+          setTimeout(digitar, 1000);
+          return;
+        }
+      } else {
+        container.textContent = texto.slice(0, index);
+        index--;
+        if (index < 0) {
+          deletando = false;
+          setTimeout(digitar, 800);
+          return;
+        }
+      }
+
+      setTimeout(digitar, 150);
+    }
+
+    digitar();
+
+    const observer = new MutationObserver(() => {
+      if (container.textContent === texto) {
+        if (!document.querySelector(".heart")) {
+          const heart = document.createElement("span");
+          heart.textContent = "❤️";
+          heart.className = "heart";
+          container.appendChild(heart);
+        }
+      } else {
+        const heart = document.querySelector(".heart");
+        if (heart) heart.remove();
+      }
+    });
+
+    observer.observe(container, { childList: true, characterData: true, subtree: true });
+
+    document.addEventListener("mousemove", function (e) {
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      document.body.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, #2e2e2e, #000000)`;
+    });
+
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play();
+        playButton.textContent = "⏸️ Pausar música";
+      } else {
+        audio.pause();
+        playButton.textContent = "▶️ Tocar música";
+      }
+    }
+  </script>
+</body>
+</html>
